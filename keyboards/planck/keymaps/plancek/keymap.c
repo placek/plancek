@@ -261,7 +261,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Adjust (Lower + Raise)
  * +-----------------------------------------------------------------------------------+
- * | Dspl |      |      |      |      |      |      |      |      |      |      |Power |
+ * | Dspl |      |      |      |      | Rec  | Play |      |      |      |      |Power |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      | RGB  | Bri+ | Hue+ | Sat+ |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -271,7 +271,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * +-----------------------------------------------------------------------------------+
  */
 [_ADJUST] = LAYOUT_planck_grid(
-    KC_FIND, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TD(PWRSLP),
+    KC_FIND, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, DM_REC1, DM_PLY1, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TD(PWRSLP),
     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, RGB_TOG, KC_BRIU, RGB_HUI, RGB_SAI, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, BL_STEP, KC_BRID, RGB_HUD, RGB_SAD, KC_TRNS, KC_TRNS, TD(MU),  KC_TRNS,
     QK_BOOT, DEBUG,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TD(ML),  TD(MD),  TD(MR)
