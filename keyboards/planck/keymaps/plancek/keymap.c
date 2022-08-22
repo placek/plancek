@@ -48,7 +48,11 @@ typedef struct {
 
 enum {
   CODE,
-  PWRSLP
+  PWRSLP,
+  ML,
+  MD,
+  MU,
+  MR
 };
 
 // Tap Dance definitions
@@ -69,9 +73,25 @@ td_state_t cur_dance(qk_tap_dance_state_t *state) {
 }
 
 static td_tap_t ctap_state = {
-  .is_press_action = true,
-  .state = TD_NONE
-};
+    .is_press_action = true,
+    .state = TD_NONE
+  },
+  mousel_tap_state = {
+    .is_press_action = true,
+    .state = TD_NONE
+  },
+  moused_tap_state = {
+    .is_press_action = true,
+    .state = TD_NONE
+  },
+  mouseu_tap_state = {
+    .is_press_action = true,
+    .state = TD_NONE
+  },
+  mouser_tap_state = {
+    .is_press_action = true,
+    .state = TD_NONE
+  };
 
 void c_finished(qk_tap_dance_state_t *state, void *user_data) {
   ctap_state.state = cur_dance(state);
@@ -91,9 +111,93 @@ void c_reset(qk_tap_dance_state_t *state, void *user_data) {
   ctap_state.state = TD_NONE;
 }
 
+void mousel_finished(qk_tap_dance_state_t *state, void *user_data) {
+  mousel_tap_state.state = cur_dance(state);
+  switch (mousel_tap_state.state) {
+    case TD_SINGLE_TAP:  register_code(KC_MS_L); unregister_code(KC_MS_L); break;
+    case TD_SINGLE_HOLD: register_code(KC_MS_L); break;
+    case TD_DOUBLE_TAP:  register_code(KC_BTN1); unregister_code(KC_BTN1); break;
+    case TD_DOUBLE_HOLD: register_code(KC_WH_L); break;
+    default: break;
+  }
+}
+
+void mousel_reset(qk_tap_dance_state_t *state, void *user_data) {
+  switch (mousel_tap_state.state) {
+    case TD_SINGLE_HOLD: unregister_code(KC_MS_L); break;
+    case TD_DOUBLE_HOLD: unregister_code(KC_WH_L); break;
+    default: break;
+  }
+  mousel_tap_state.state = TD_NONE;
+}
+
+void moused_finished(qk_tap_dance_state_t *state, void *user_data) {
+  moused_tap_state.state = cur_dance(state);
+  switch (moused_tap_state.state) {
+    case TD_SINGLE_TAP:  register_code(KC_MS_D); unregister_code(KC_MS_D); break;
+    case TD_SINGLE_HOLD: register_code(KC_MS_D); break;
+    case TD_DOUBLE_TAP:  register_code(KC_BTN3); unregister_code(KC_BTN3); break;
+    case TD_DOUBLE_HOLD: register_code(KC_WH_D); break;
+    default: break;
+  }
+}
+
+void moused_reset(qk_tap_dance_state_t *state, void *user_data) {
+  switch (moused_tap_state.state) {
+    case TD_SINGLE_HOLD: unregister_code(KC_MS_D); break;
+    case TD_DOUBLE_HOLD: unregister_code(KC_WH_D); break;
+    default: break;
+  }
+  moused_tap_state.state = TD_NONE;
+}
+
+void mouseu_finished(qk_tap_dance_state_t *state, void *user_data) {
+  mouseu_tap_state.state = cur_dance(state);
+  switch (mouseu_tap_state.state) {
+    case TD_SINGLE_TAP:  register_code(KC_MS_U); unregister_code(KC_MS_U); break;
+    case TD_SINGLE_HOLD: register_code(KC_MS_U); break;
+    case TD_DOUBLE_TAP:  register_code(KC_BTN3); unregister_code(KC_BTN3); break;
+    case TD_DOUBLE_HOLD: register_code(KC_WH_U); break;
+    default: break;
+  }
+}
+
+void mouseu_reset(qk_tap_dance_state_t *state, void *user_data) {
+  switch (mouseu_tap_state.state) {
+    case TD_SINGLE_HOLD: unregister_code(KC_MS_U); break;
+    case TD_DOUBLE_HOLD: unregister_code(KC_WH_U); break;
+    default: break;
+  }
+  mouseu_tap_state.state = TD_NONE;
+}
+
+void mouser_finished(qk_tap_dance_state_t *state, void *user_data) {
+  mouser_tap_state.state = cur_dance(state);
+  switch (mouser_tap_state.state) {
+    case TD_SINGLE_TAP:  register_code(KC_MS_R); unregister_code(KC_MS_R); break;
+    case TD_SINGLE_HOLD: register_code(KC_MS_R); break;
+    case TD_DOUBLE_TAP:  register_code(KC_BTN2); unregister_code(KC_BTN2); break;
+    case TD_DOUBLE_HOLD: register_code(KC_WH_R); break;
+    default: break;
+  }
+}
+
+void mouser_reset(qk_tap_dance_state_t *state, void *user_data) {
+  switch (mouser_tap_state.state) {
+    case TD_SINGLE_HOLD: unregister_code(KC_MS_R); break;
+    case TD_DOUBLE_HOLD: unregister_code(KC_WH_R); break;
+    default: break;
+  }
+  mouser_tap_state.state = TD_NONE;
+}
+
 qk_tap_dance_action_t tap_dance_actions[] = {
   [CODE]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, c_finished, c_reset),
-  [PWRSLP] = ACTION_TAP_DANCE_DOUBLE(KC_PWR, KC_SLEP)
+  [PWRSLP] = ACTION_TAP_DANCE_DOUBLE(KC_PWR, KC_SLEP),
+  [ML]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, mousel_finished, mousel_reset),
+  [MD]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, moused_finished, moused_reset),
+  [MU]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, mouseu_finished, mouseu_reset),
+  [MR]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, mouser_finished, mouser_reset)
 };
 
 #define LOWER MO(_LOWER)
@@ -157,20 +261,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Adjust (Lower + Raise)
  * +-----------------------------------------------------------------------------------+
- * | Dspl |      |      |      |  RGB | HUE+ | HUE- | SAT+ | SAT- |      |      |Power |
+ * | Dspl |      |      |      |      |      |      |      |      |      |      |Power |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |      |      |      |      | RGB  | Bri+ | Hue+ | Sat+ |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |      |      |      |      |Cycle | Bri- | Hue- | Sat- |      |      |  MUP |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |Reset |Debug |      |      |      |             |      |      |      |      |      |
+ * |Reset |Debug |      |      |      |             |      |      |  MLT |  MDN |  MRT |
  * +-----------------------------------------------------------------------------------+
  */
 [_ADJUST] = LAYOUT_planck_grid(
-    KC_FIND, KC_TRNS, KC_TRNS, KC_TRNS, RGB_TOG, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, KC_TRNS, KC_TRNS, TD(PWRSLP),
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-    QK_BOOT, DEBUG,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+    KC_FIND, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TD(PWRSLP),
+    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, RGB_TOG, KC_BRIU, RGB_HUI, RGB_SAI, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, BL_STEP, KC_BRID, RGB_HUD, RGB_SAD, KC_TRNS, KC_TRNS, TD(MU),  KC_TRNS,
+    QK_BOOT, DEBUG,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TD(ML),  TD(MD),  TD(MR)
 )
 
 };
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+  return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+}
