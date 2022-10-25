@@ -37,6 +37,8 @@ typedef enum {
   TD_DOUBLE_TAP,
   TD_DOUBLE_HOLD,
   TD_DOUBLE_SINGLE_TAP,
+  TD_TRIPLE_TAP,
+  TD_TRIPLE_HOLD
 } td_state_t;
 
 typedef struct {
@@ -50,7 +52,8 @@ enum {
   ML,
   MD,
   MU,
-  MR
+  MR,
+  FB
 };
 
 // Tap Dance definitions
@@ -71,6 +74,10 @@ td_state_t cur_dance(qk_tap_dance_state_t *state) {
 }
 
 static td_tap_t ctap_state = {
+    .is_press_action = true,
+    .state = TD_NONE
+  },
+  fb_tap_state = {
     .is_press_action = true,
     .state = TD_NONE
   },
@@ -189,9 +196,19 @@ void mouser_reset(qk_tap_dance_state_t *state, void *user_data) {
   mouser_tap_state.state = TD_NONE;
 }
 
+void fb_finished(qk_tap_dance_state_t *state, void *user_data) {
+  fb_tap_state.state = cur_dance(state);
+  switch (fb_tap_state.state) {
+    case TD_SINGLE_TAP: register_code(KC_LCTL); register_code(KC_LALT); register_code(KC_F7); unregister_code(KC_F7); unregister_code(KC_LALT); unregister_code(KC_LCTL); break;
+    case TD_DOUBLE_TAP: register_code(KC_LCTL); register_code(KC_LALT); register_code(KC_F1); unregister_code(KC_F1); unregister_code(KC_LALT); unregister_code(KC_LCTL); break;
+    default: break;
+  }
+}
+
 qk_tap_dance_action_t tap_dance_actions[] = {
   [CODE]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, c_finished, c_reset),
   [PWRSLP] = ACTION_TAP_DANCE_DOUBLE(KC_PWR, KC_SLEP),
+  [FB]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fb_finished, NULL),
   [ML]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, mousel_finished, mousel_reset),
   [MD]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, moused_finished, moused_reset),
   [MU]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, mouseu_finished, mouseu_reset),
@@ -269,7 +286,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * +-----------------------------------------------------------------------------------+
  */
 [_ADJUST] = LAYOUT_planck_grid(
-    KC_FIND, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, DM_REC1, DM_PLY1, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TD(PWRSLP),
+    KC_FIND, TD(FB),  KC_TRNS, KC_TRNS, KC_TRNS, DM_REC1, DM_PLY1, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TD(PWRSLP),
     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, RGB_TOG, KC_BRIU, RGB_HUI, RGB_SAI, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, BL_STEP, KC_BRID, RGB_HUD, RGB_SAD, KC_TRNS, KC_TRNS, TD(MU),  KC_TRNS,
     QK_BOOT, DEBUG,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TD(ML),  TD(MD),  TD(MR)
