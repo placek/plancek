@@ -49,6 +49,7 @@ typedef struct {
 enum {
   CODE,
   PWRSLP,
+  MUTE,
   ML,
   MD,
   MU,
@@ -78,6 +79,10 @@ static td_tap_t ctap_state = {
     .state = TD_NONE
   },
   fb_tap_state = {
+    .is_press_action = true,
+    .state = TD_NONE
+  },
+  mute_tap_state = {
     .is_press_action = true,
     .state = TD_NONE
   },
@@ -205,9 +210,19 @@ void fb_finished(qk_tap_dance_state_t *state, void *user_data) {
   }
 }
 
+void mute_finished(qk_tap_dance_state_t *state, void *user_data) {
+  mute_tap_state.state = cur_dance(state);
+  switch (mute_tap_state.state) {
+    case TD_SINGLE_TAP: register_code(KC_AUDIO_MUTE); unregister_code(KC_AUDIO_MUTE); break;
+    case TD_DOUBLE_TAP: register_code(KC_CALC); unregister_code(KC_CALC); break;
+    default: break;
+  }
+}
+
 qk_tap_dance_action_t tap_dance_actions[] = {
   [CODE]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, c_finished, c_reset),
   [PWRSLP] = ACTION_TAP_DANCE_DOUBLE(KC_PWR, KC_SLEP),
+  [MUTE]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, mute_finished, NULL),
   [FB]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fb_finished, NULL),
   [ML]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, mousel_finished, mousel_reset),
   [MD]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, moused_finished, moused_reset),
@@ -270,13 +285,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_RAISE] = LAYOUT_planck_grid(
     KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,         KC_9,    KC_0,    KC_DEL,
     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MINS, KC_PLUS,      KC_LCBR, KC_RCBR, KC_TRNS,
-    KC_PIPE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,      KC_MUTE, KC_VOLU, KC_MPLY,
+    KC_PIPE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,      TD(MUTE), KC_VOLU, KC_MPLY,
     TMCOPY,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LAG(KC_RGHT), KC_MPRV, KC_VOLD, KC_MNXT
 ),
 
 /* Adjust (Lower + Raise)
  * +-----------------------------------------------------------------------------------+
- * | Dspl |      |      |      |      | Rec  | Play |      |      |      |      |Power |
+ * | Dspl |FBtogg|      |      |      | Rec  | Play |      |      |      |      |Power |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      | RGB  | Bri+ | Hue+ | Sat+ |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
