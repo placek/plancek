@@ -48,5 +48,5 @@
 // Most tactile encoders have detents every 4 stages
 #define ENCODER_RESOLUTION 4
 
-#define TAPPING_TERM 200
+#define TAPPING_TERM 120
 #define MK_3_SPEED
