@@ -47,8 +47,6 @@ typedef struct {
 } td_tap_t;
 
 enum {
-  KITTY,
-  VIM,
   PWRSLP,
   MUTE,
   ML,
@@ -75,15 +73,7 @@ td_state_t cur_dance(qk_tap_dance_state_t *state) {
   return TD_NONE;
 }
 
-static td_tap_t kitty_tap_state = {
-    .is_press_action = true,
-    .state = TD_NONE
-  },
-  vim_tap_state = {
-    .is_press_action = true,
-    .state = TD_NONE
-  },
-  fb_tap_state = {
+static td_tap_t fb_tap_state = {
     .is_press_action = true,
     .state = TD_NONE
   },
@@ -188,41 +178,6 @@ void mouser_reset(qk_tap_dance_state_t *state, void *user_data) {
   mouser_tap_state.state = TD_NONE;
 }
 
-void kitty_finished(qk_tap_dance_state_t *state, void *user_data) {
-  kitty_tap_state.state = cur_dance(state);
-  switch (kitty_tap_state.state) {
-    case TD_SINGLE_TAP:  register_code(KC_LCTL); register_code(KC_LSFT); register_code(KC_K); unregister_code(KC_K); unregister_code(KC_LSFT); unregister_code(KC_LCTL); break;
-    case TD_SINGLE_HOLD: register_code(KC_LALT); break;
-    default: break;
-  }
-}
-
-void kitty_reset(qk_tap_dance_state_t *state, void *user_data) {
-  switch (kitty_tap_state.state) {
-    case TD_SINGLE_HOLD: unregister_code(KC_LALT); break;
-    default: break;
-  }
-  kitty_tap_state.state = TD_NONE;
-}
-
-void vim_finished(qk_tap_dance_state_t *state, void *user_data) {
-  vim_tap_state.state = cur_dance(state);
-  switch (vim_tap_state.state) {
-    case TD_SINGLE_TAP:  register_code(KC_LCTL); register_code(KC_W); unregister_code(KC_W); unregister_code(KC_LCTL); break;
-    case TD_DOUBLE_TAP:  register_code(KC_LCTL); register_code(KC_W); unregister_code(KC_W); unregister_code(KC_LCTL); register_code(KC_LCTL); register_code(KC_W); unregister_code(KC_W); unregister_code(KC_LCTL); break;
-    case TD_SINGLE_HOLD: register_code(KC_RALT); break;
-    default: break;
-  }
-}
-
-void vim_reset(qk_tap_dance_state_t *state, void *user_data) {
-  switch (vim_tap_state.state) {
-    case TD_SINGLE_HOLD: unregister_code(KC_RALT); break;
-    default: break;
-  }
-  vim_tap_state.state = TD_NONE;
-}
-
 void fb_finished(qk_tap_dance_state_t *state, void *user_data) {
   fb_tap_state.state = cur_dance(state);
   switch (fb_tap_state.state) {
@@ -235,15 +190,13 @@ void fb_finished(qk_tap_dance_state_t *state, void *user_data) {
 void mute_finished(qk_tap_dance_state_t *state, void *user_data) {
   mute_tap_state.state = cur_dance(state);
   switch (mute_tap_state.state) {
-    case TD_SINGLE_TAP: register_code(KC_AUDIO_MUTE); unregister_code(KC_AUDIO_MUTE); break;
-    case TD_DOUBLE_TAP: register_code(KC_CALC); unregister_code(KC_CALC); break;
+    case TD_SINGLE_TAP: register_code(KC_CALC); unregister_code(KC_CALC); break;
+    case TD_DOUBLE_TAP: register_code(KC_AUDIO_MUTE); unregister_code(KC_AUDIO_MUTE); break;
     default: break;
   }
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [KITTY]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, kitty_finished, kitty_reset),
-  [VIM]    = ACTION_TAP_DANCE_FN_ADVANCED(NULL, vim_finished, vim_reset),
   [PWRSLP] = ACTION_TAP_DANCE_DOUBLE(KC_PWR, KC_SLEP),
   [MUTE]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, mute_finished, NULL),
   [FB]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fb_finished, NULL),
@@ -270,10 +223,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * +-----------------------------------------------------------------------------------+
  */
 [_QWERTY] = LAYOUT_planck_grid(
-    KC_ESC,          KC_Q,    KC_W,    KC_E,      KC_R,  KC_T,   KC_Y,   KC_U,  KC_I,    KC_O,    KC_P,    KC_BSPC,
-    KC_TAB,          KC_A,    KC_S,    KC_D,      KC_F,  KC_G,   KC_H,   KC_J,  KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    LSFT_T(KC_BSLS), KC_Z,    KC_X,    KC_C,      KC_V,  KC_B,   KC_N,   KC_M,  KC_COMM, KC_DOT,  KC_UP,   KC_SFTENT,
-    KC_LCTL,         KC_SLSH, KC_LGUI, TD(KITTY), LOWER, KC_SPC, KC_SPC, RAISE, TD(VIM), KC_LEFT, KC_DOWN, KC_RGHT
+    KC_ESC,          KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,   KC_Y,   KC_U,  KC_I,    KC_O,    KC_P,    KC_BSPC,
+    KC_TAB,          KC_A,    KC_S,    KC_D,    KC_F,  KC_G,   KC_H,   KC_J,  KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+    LSFT_T(KC_BSLS), KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,   KC_N,   KC_M,  KC_COMM, KC_DOT,  KC_UP,   KC_SFTENT,
+    KC_LCTL,         KC_SLSH, KC_LGUI, KC_LALT, LOWER, KC_SPC, KC_SPC, RAISE, KC_RALT, KC_LEFT, KC_DOWN, KC_RGHT
 ),
 
 /* Lower
