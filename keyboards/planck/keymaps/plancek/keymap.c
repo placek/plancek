@@ -219,7 +219,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |  Up  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl |   /  | GUI  | Alt  |Lower |    Space    |Raise | AltR | Left | Down |Right |
+ * | Ctrl |   /  | GUI  | Alt  |Lower |    Space    | Raise| AltR | Left | Down |Right |
  * +-----------------------------------------------------------------------------------+
  */
 [_QWERTY] = LAYOUT_planck_grid(
@@ -255,14 +255,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |   |  |      |      |      |      |      |      |      |      | Mute | Vol+ | Play |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |TCOPY |      |      |      |      |             |      |  AG> | Prev | Vol- | Next |
+ * |      |      |      |      |      |             |      |  AG> | Prev | Vol- | Next |
  * +-----------------------------------------------------------------------------------+
  */
 [_RAISE] = LAYOUT_planck_grid(
-    KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,         KC_9,    KC_0,    KC_DEL,
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MINS, KC_PLUS,      KC_LCBR, KC_RCBR, KC_TRNS,
+    KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,         KC_9,     KC_0,    KC_DEL,
+    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MINS, KC_PLUS,      KC_LCBR,  KC_RCBR, KC_TRNS,
     KC_PIPE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,      TD(MUTE), KC_VOLU, KC_MPLY,
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LAG(KC_RGHT), KC_MPRV, KC_VOLD, KC_MNXT
+    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LAG(KC_RGHT), KC_MPRV,  KC_VOLD, KC_MNXT
 ),
 
 /* Adjust (Lower + Raise)
@@ -271,7 +271,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      | RGB  | Bri+ | Hue+ | Sat+ |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |Cycle | Bri- | Hue- | Sat- |      |      |  MUP |      |
+ * |      |      |      |      |Cycle | Bri- | Hue- | Sat- |      |  MB1 |  MUP | MB3  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |Reset |Debug |      |      |      |             |      |      |  MLT |  MDN |  MRT |
  * +-----------------------------------------------------------------------------------+
@@ -279,7 +279,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_ADJUST] = LAYOUT_planck_grid(
     KC_FIND, TD(FB),  KC_TRNS, KC_TRNS, KC_TRNS, DM_REC1, DM_PLY1, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TD(PWRSLP),
     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, RGB_TOG, KC_BRIU, RGB_HUI, RGB_SAI, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, BL_STEP, KC_BRID, RGB_HUD, RGB_SAD, KC_TRNS, KC_TRNS, TD(MU),  KC_TRNS,
+    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, BL_STEP, KC_BRID, RGB_HUD, RGB_SAD, KC_TRNS, KC_BTN1, TD(MU),  KC_BTN3,
     QK_BOOT, DEBUG,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TD(ML),  TD(MD),  TD(MR)
 )
 
