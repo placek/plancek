@@ -29,3 +29,4 @@
 #define ADNS5050_CS_PIN           B4
 
 #define POINTING_DEVICE_ROTATION_270
+#define PLOOPY_DPI_DEFAULT 0
