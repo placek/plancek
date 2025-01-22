@@ -42,7 +42,8 @@ float scroll_accumulated_v = 0;
 
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
   mouse_report.buttons &= MOUSE_BTN1;
-  if (layer_state_is(_BSPC)) {
+  if (layer_state_is(_BSPC) || layer_state_is(_SPC)) {
+    pimoroni_trackball_set_rgbw(0x00, 0x00, 0x80, 0x00);
     if (mouse_report.buttons & MOUSE_BTN1) { mouse_report.buttons = MOUSE_BTN2; }
     scroll_accumulated_h += (float)mouse_report.x * SCROLL_RATE;
     scroll_accumulated_v -= (float)mouse_report.y * SCROLL_RATE;
@@ -53,7 +54,10 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     mouse_report.x = 0;
     mouse_report.y = 0;
   } else if (layer_state_is(_V) || layer_state_is(_B)) {
+    pimoroni_trackball_set_rgbw(0x80, 0x80, 0x00, 0x00);
     if (mouse_report.buttons & MOUSE_BTN1) { mouse_report.buttons = MOUSE_BTN3; }
+  } else {
+    pimoroni_trackball_set_rgbw(0x00, 0x00, 0x00, 0x00);
   }
   return mouse_report;
 }
