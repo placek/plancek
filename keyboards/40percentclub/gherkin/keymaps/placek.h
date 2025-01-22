@@ -8,6 +8,7 @@
 #define SFT_Z       RSFT_T(KC_Z)
 #define SFT_ESC     RSFT_T(KC_ESC)
 #define CTL_A       RCTL_T(KC_A)
+#define C_A         LCTL(KC_A)
 #define ALT_N       ALT_T(KC_N)
 #define ALT_M       ALGR_T(KC_M)
 #define GUI_X       LGUI_T(KC_X)
