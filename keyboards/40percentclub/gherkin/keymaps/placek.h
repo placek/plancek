@@ -13,4 +13,12 @@
 #define GUI_X       LGUI_T(KC_X)
 #define MUTE        KC_AUDIO_MUTE
 
+enum layer_names {
+  _QWERTY,
+  _SPC,
+  _BSPC,
+  _V,
+  _B
+};
+
 #endif // PLACEK_H
