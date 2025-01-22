@@ -13,10 +13,4 @@
 #define GUI_X       LGUI_T(KC_X)
 #define MUTE        KC_AUDIO_MUTE
 
-enum custom_keycodes {
-  TG_SCRL = SAFE_RANGE,
-};
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record);
-
 #endif // PLACEK_H
