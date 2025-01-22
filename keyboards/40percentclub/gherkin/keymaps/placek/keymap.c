@@ -22,13 +22,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [3] = LAYOUT_ortho_3x10(
-    _______, _______, _______, _______, DM_REC1,   DM_PLY1, _______, _______, KC_LCBR, KC_RCBR,
+    QK_RBT,  _______, _______, _______, DM_REC1,   DM_PLY1, _______, _______, KC_LCBR, KC_RCBR,
     _______, _______, _______, _______, _______,   KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_DQUO,
     KC_TAB,  _______, MUTE,    _______, KC_VOLD,   KC_VOLU, _______, _______, _______, KC_PSCR
   ),
 
   [4] = LAYOUT_ortho_3x10(
-    _______, _______, _______, _______, DM_REC1,   DM_PLY1, _______, _______, KC_LBRC, KC_RBRC,
+    QK_BOOT, _______, _______, _______, DM_REC1,   DM_PLY1, _______, _______, KC_LBRC, KC_RBRC,
     _______, _______, _______, _______, _______,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_GRV,
     KC_TAB,  _______, _______, _______, KC_MPRV,   KC_MNXT, _______, KC_MPLY, _______, KC_PWR
   )
