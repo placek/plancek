@@ -34,3 +34,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   )
 
 };
+
+#define SCROLL_RATE 0.1
+
+float scroll_accumulated_h = 0;
+float scroll_accumulated_v = 0;
+
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+  mouse_report.buttons &= MOUSE_BTN1;
+  if (layer_state_is(_BSPC)) {
+    if (mouse_report.buttons & MOUSE_BTN1) { mouse_report.buttons = MOUSE_BTN2; }
+    scroll_accumulated_h += (float)mouse_report.x * SCROLL_RATE;
+    scroll_accumulated_v -= (float)mouse_report.y * SCROLL_RATE;
+    mouse_report.h = (int8_t)scroll_accumulated_h;
+    mouse_report.v = (int8_t)scroll_accumulated_v;
+    scroll_accumulated_h -= (int8_t)scroll_accumulated_h;
+    scroll_accumulated_v -= (int8_t)scroll_accumulated_v;
+    mouse_report.x = 0;
+    mouse_report.y = 0;
+  } else if (layer_state_is(_V) || layer_state_is(_B)) {
+    if (mouse_report.buttons & MOUSE_BTN1) { mouse_report.buttons = MOUSE_BTN3; }
+  }
+  return mouse_report;
+}
