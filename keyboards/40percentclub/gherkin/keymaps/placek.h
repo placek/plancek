@@ -22,4 +22,10 @@ enum layer_names {
   _B
 };
 
+enum custom_keycodes {
+  RBR = SAFE_RANGE,
+  CBR,
+  PRN
+};
+
 #endif // PLACEK_H

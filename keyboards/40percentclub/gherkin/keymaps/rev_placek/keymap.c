@@ -76,12 +76,34 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
   return mouse_report;
 }
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case PRN:
+      if (record->event.pressed) { SEND_STRING("()" SS_TAP(X_LEFT)); }
+      return false;
+    case RBR:
+      if (record->event.pressed) { SEND_STRING("[]" SS_TAP(X_LEFT)); }
+      return false;
+    case CBR:
+      if (record->event.pressed) { SEND_STRING("{}" SS_TAP(X_LEFT)); }
+      return false;
+  }
+
+  return true;
+}
+
 const uint16_t PROGMEM c_a_combo[] = {CTL_A, KC_S, COMBO_END};
 const uint16_t PROGMEM btn_combo[] = {FN3_V, FN2_BSPC, COMBO_END};
 const uint16_t PROGMEM tab_combo[] = {KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM prn_combo[] = {KC_LPRN, KC_RPRN, COMBO_END};
+const uint16_t PROGMEM rbr_combo[] = {KC_LBRC, KC_RBRC, COMBO_END};
+const uint16_t PROGMEM cbr_combo[] = {KC_LCBR, KC_RCBR, COMBO_END};
 
 combo_t key_combos[] = {
   COMBO(tab_combo, KC_TAB),
   COMBO(c_a_combo, C_A),
-  COMBO(btn_combo, KC_BTN1)
+  COMBO(btn_combo, KC_BTN1),
+  COMBO(prn_combo, PRN),
+  COMBO(rbr_combo, RBR),
+  COMBO(cbr_combo, CBR)
 };
