@@ -23,13 +23,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_V] = LAYOUT_ortho_3x10(
     _______,  _______, MUTE,    _______, KC_VOLD,   KC_VOLU, QK_RBT,  _______, _______, KC_PSCR,
-    C_A,      _______, _______, _______, _______,   KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_DQUO,
+    _______,  _______, _______, _______, _______,   KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_DQUO,
     _______,  _______, _______, _______, DM_REC1,   DM_PLY1, _______, _______, KC_LCBR, KC_RCBR
   ),
 
   [_B] = LAYOUT_ortho_3x10(
     _______,  _______, _______, QK_BOOT, KC_MPRV,   KC_MNXT, _______, KC_MPLY, _______, KC_PWR,
-    C_A,      _______, _______, _______, _______,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_GRV,
+    _______,  _______, _______, _______, _______,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_GRV,
     _______,  _______, _______, _______, DM_REC1,   DM_PLY1, _______, _______, KC_LBRC, KC_RBRC
   )
 
@@ -76,8 +76,12 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
   return mouse_report;
 }
 
-const uint16_t PROGMEM tab_combo[] = {CTL_A, KC_S, COMBO_END};
+const uint16_t PROGMEM c_a_combo[] = {CTL_A, KC_S, COMBO_END};
+const uint16_t PROGMEM btn_combo[] = {FN3_V, FN2_BSPC, COMBO_END};
+const uint16_t PROGMEM tab_combo[] = {KC_Q, KC_W, COMBO_END};
 
 combo_t key_combos[] = {
-  COMBO(tab_combo, KC_TAB)
+  COMBO(tab_combo, KC_TAB),
+  COMBO(c_a_combo, C_A),
+  COMBO(btn_combo, KC_BTN1)
 };

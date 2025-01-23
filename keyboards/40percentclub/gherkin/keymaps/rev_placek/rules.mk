@@ -1,4 +1,5 @@
 DYNAMIC_MACRO_ENABLE = yes
 POINTING_DEVICE_ENABLE = yes
-POINTING_DEVICE_DRIVER = pimoroni_trackball
 COMBO_ENABLE = yes
+
+POINTING_DEVICE_DRIVER = pimoroni_trackball
