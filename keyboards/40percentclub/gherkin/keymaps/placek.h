@@ -33,16 +33,16 @@ enum custom_keycodes {
 };
 
 const uint16_t PROGMEM btn_combo[]  = {FN3_V,   FN2_BSPC, COMBO_END};
-const uint16_t PROGMEM abk_combo[]  = {KC_LABK, KC_RABK, COMBO_END};
-const uint16_t PROGMEM c_a_combo[]  = {CTL_A,   KC_S,    COMBO_END};
-const uint16_t PROGMEM caps_combo[] = {SFT_Z,   SFT_ESC, COMBO_END};
-const uint16_t PROGMEM cbr_combo[]  = {KC_LCBR, KC_RCBR, COMBO_END};
-const uint16_t PROGMEM dquo_combo[] = {KC_END,  KC_DQUO, COMBO_END};
-const uint16_t PROGMEM grv_combo[]  = {KC_RGHT, KC_GRV,  COMBO_END};
-const uint16_t PROGMEM prn_combo[]  = {KC_LPRN, KC_RPRN, COMBO_END};
-const uint16_t PROGMEM quot_combo[] = {KC_BSLS, KC_QUOT, COMBO_END};
-const uint16_t PROGMEM rbr_combo[]  = {KC_LBRC, KC_RBRC, COMBO_END};
-const uint16_t PROGMEM tab_combo[]  = {KC_Q,    KC_W,    COMBO_END};
+const uint16_t PROGMEM abk_combo[]  = {KC_LABK, KC_RABK,  COMBO_END};
+const uint16_t PROGMEM c_a_combo[]  = {CTL_A,   KC_S,     COMBO_END};
+const uint16_t PROGMEM caps_combo[] = {SFT_Z,   SFT_ESC,  COMBO_END};
+const uint16_t PROGMEM cbr_combo[]  = {KC_LCBR, KC_RCBR,  COMBO_END};
+const uint16_t PROGMEM dquo_combo[] = {KC_END,  KC_DQUO,  COMBO_END};
+const uint16_t PROGMEM grv_combo[]  = {KC_RGHT, KC_GRV,   COMBO_END};
+const uint16_t PROGMEM prn_combo[]  = {KC_LPRN, KC_RPRN,  COMBO_END};
+const uint16_t PROGMEM quot_combo[] = {KC_BSLS, KC_QUOT,  COMBO_END};
+const uint16_t PROGMEM rbr_combo[]  = {KC_LBRC, KC_RBRC,  COMBO_END};
+const uint16_t PROGMEM tab_combo[]  = {KC_Q,    KC_W,     COMBO_END};
 
 combo_t key_combos[] = {
   COMBO(btn_combo, KC_BTN1),
