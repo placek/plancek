@@ -46,6 +46,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case CBR:
       if (record->event.pressed) { SEND_STRING("{}" SS_TAP(X_LEFT)); }
       return false;
+    case DQUO:
+      if (record->event.pressed) { SEND_STRING("\"\"" SS_TAP(X_LEFT)); }
+      return false;
+    case QUOT:
+      if (record->event.pressed) { SEND_STRING("''" SS_TAP(X_LEFT)); }
+      return false;
   }
   return true;
 }
