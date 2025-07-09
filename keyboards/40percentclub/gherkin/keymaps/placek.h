@@ -43,6 +43,9 @@ const uint16_t PROGMEM prn_combo[]  = {KC_LPRN, KC_RPRN,  COMBO_END};
 const uint16_t PROGMEM quot_combo[] = {KC_BSLS, KC_QUOT,  COMBO_END};
 const uint16_t PROGMEM rbr_combo[]  = {KC_LBRC, KC_RBRC,  COMBO_END};
 const uint16_t PROGMEM tab_combo[]  = {KC_Q,    KC_W,     COMBO_END};
+const uint16_t PROGMEM c_x_combo[]  = {SFT_Z,   GUI_X,    COMBO_END};
+const uint16_t PROGMEM c_c_combo[]  = {GUI_X,   KC_C,     COMBO_END};
+const uint16_t PROGMEM c_v_combo[]  = {KC_C,    FN3_V,    COMBO_END};
 
 combo_t key_combos[] = {
   COMBO(btn_combo, KC_BTN1),
@@ -55,7 +58,10 @@ combo_t key_combos[] = {
   COMBO(prn_combo, PRN),
   COMBO(quot_combo, QUOT),
   COMBO(rbr_combo, RBR),
-  COMBO(tab_combo, KC_TAB)
+  COMBO(tab_combo, KC_TAB),
+  COMBO(c_x_combo, KC_CUT),
+  COMBO(c_c_combo, KC_COPY),
+  COMBO(c_v_combo, KC_PASTE)
 };
 
 #endif // PLACEK_H
